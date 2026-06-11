@@ -9,4 +9,5 @@ public class TestikaApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(TestikaApplication.class, args);
 	}
+
 }
