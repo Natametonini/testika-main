@@ -1,0 +1,40 @@
+.header {
+  position: fixed;
+  top: 0;
+  width: 100%;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: 1rem 6%;
+
+  background: #1a1a1a;
+
+  z-index: 1000;
+}
+
+.logo {
+  color: #e8590c;
+  font-size: 1.8rem;
+  font-weight: 700;
+}
+
+.menu {
+  display: flex;
+  gap: 2rem;
+  list-style: none;
+}
+
+.menu li {
+  color: white;
+  cursor: pointer;
+}
+
+.button {
+  background: #e8590c;
+  color: white;
+  border: none;
+  padding: 0.8rem 1.4rem;
+  border-radius: 10px;
+}

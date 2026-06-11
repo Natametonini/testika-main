@@ -1,0 +1,8 @@
+.toggle {
+  background: #e8590c;
+  border: none;
+  padding: 10px;
+  border-radius: 50%;
+  color: white;
+  cursor: pointer;
+}
