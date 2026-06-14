@@ -33,12 +33,11 @@ public class UsuarioEntity {
     }
 
     // Construtor Cheio
-    public UsuarioEntity(Long id, String nome, String email, String senha, String tipoUsuario, TipoPlano tipoPlano) {
+    public UsuarioEntity(Long id, String nome, String email, String senha, String tipoUsuario) {
         this.nome = nome;
         this.email = email;
         this.senha = senha;
         this.tipoUsuario = tipoUsuario;
-        this.tipoPlano = tipoPlano;
     }
 
     // Getters e Setters
