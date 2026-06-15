@@ -30,15 +30,18 @@ function Room() {
   const [selected, setSelected] = useState(null);
   const [time, setTime] = useState(10);
   const [score, setScore] = useState(0);
+  
+    //  MODAL LOGIN
+  const [showNameModal, setShowNameModal] = useState(false);
+  const [tempName, setTempName] = useState("");
 
   const question = mockQuestions[current];
 
   // LOGIN
   useEffect(() => {
-    if (!user) {
-      const name = prompt("Digite seu nome para entrar no quiz:");
-      if (name) login(name);
-    }
+  if (!user) {
+    setShowNameModal(true);
+  }
   }, []);
 
   // TIMER
@@ -77,6 +80,40 @@ function Room() {
     } else {
       setPhase("finished");
     }
+  }
+
+  /* ---------------- LOADING NAME MODAL ---------------- */
+
+  if (showNameModal) {
+    return (
+      <div className={styles.modalOverlay}>
+
+        <div className={styles.modal}>
+          <h2>Bem-vindo ao Testika</h2>
+
+          <p>Digite seu nome para entrar na sala</p>
+
+          <input
+            type="text"
+            placeholder="Seu nome"
+            value={tempName}
+            onChange={(e) => setTempName(e.target.value)}
+          />
+
+          <button
+            onClick={() => {
+              if (!tempName.trim()) return;
+
+              login(tempName);
+              setShowNameModal(false);
+            }}
+          >
+            Entrar
+          </button>
+        </div>
+
+      </div>
+    );
   }
 
   /* ---------------- LOBBY ---------------- */

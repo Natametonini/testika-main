@@ -17,62 +17,44 @@ function Home() {
     <div className={styles.page}>
 
       {/* HERO */}
-      <section className={styles.hero}>
+<section className={styles.hero}>
 
-        <motion.div
-          className={styles.heroText}
-          initial={{ opacity: 0, x: -40 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.6 }}
-        >
-          <h1>
-            Aprender nunca foi tão <span>divertido</span>
-          </h1>
+  <motion.div
+    className={styles.heroText}
+    initial={{ opacity: 0, x: -40 }}
+    animate={{ opacity: 1, x: 0 }}
+    transition={{ duration: 0.6 }}
+  >
+    <h1>
+      Aprender nunca foi tão <span>divertido</span>
+    </h1>
 
-          <p>
-            Crie quizzes em tempo real, participe usando códigos e torne qualquer assunto mais interativo.
-          </p>
+    <p>
+      Crie quizzes em tempo real, participe usando códigos e torne qualquer assunto mais interativo.
+    </p>
 
-          <div className={styles.actionsCard}>
+    <div className={styles.actionsCard}>
 
-  <input
-    type="text"
-    placeholder="Digite o código da sala"
-    value={code}
-    onChange={(e) => setCode(e.target.value)}
-  />
+      <input
+        type="text"
+        placeholder="Digite o código da sala"
+        value={code}
+        onChange={(e) => setCode(e.target.value)}
+      />
 
-  <button onClick={handleJoinRoom}>
-    Entrar na sala
-  </button>
+      <button onClick={handleJoinRoom}>
+        Entrar na sala
+      </button>
 
-  <button className={styles.secondary}>
-    Criar sala
-  </button>
+      <button className={styles.secondary}>
+        Criar sala
+      </button>
 
-</div>
-        </motion.div>
+    </div>
 
-        <motion.div
-          className={styles.heroCard}
-          initial={{ opacity: 0, x: 40 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.6 }}
-        >
-          <div className={styles.mock}>
-            <h3>Quiz ao vivo</h3>
-            <p>Quem foi o primeiro presidente do Brasil?</p>
+  </motion.div>
 
-            <div className={styles.options}>
-              <span>Deodoro</span>
-              <span>Getúlio</span>
-              <span>Juscelino</span>
-              <span>Lula</span>
-            </div>
-          </div>
-        </motion.div>
-
-      </section>
+</section>
 
       {/* STATS */}
       <section className={styles.statsSection}>

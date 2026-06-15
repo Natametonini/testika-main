@@ -1,5 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/Auth";
+import logo from "./Logo.png";
 
 import styles from "./Navbar.module.css";
 
@@ -20,9 +21,9 @@ function Navbar() {
   return (
     <header className={styles.header}>
       <nav className={styles.nav}>
-        <Link to="/">
-          <h2>Testika</h2>
-        </Link>
+        <Link to="/" className={styles.logoWrapper}>
+  <img src={logo} alt="Testika logo" className={styles.logo} />
+</Link>
 
         <div className={styles.links}>
           <Link to="/">Home</Link>

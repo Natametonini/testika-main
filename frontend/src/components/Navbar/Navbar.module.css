@@ -21,6 +21,28 @@
   align-items: center;
 }
 
+.logoWrapper {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+}
+
+.logo {
+  width: 45px;
+  height: 45px;
+  object-fit: contain;
+}
+
+.logo {
+  width: 150px;
+  height: 150px;
+  transition: 0.2s;
+}
+
+.logo:hover {
+  transform: scale(1.05);
+}
+
 .links {
   display: flex;
 

@@ -124,6 +124,7 @@
   border: none;
   border-radius: 12px;
   background: white;
+  color: black;
   cursor: pointer;
 }
 
@@ -190,4 +191,47 @@
   height: 100%;
   background: #e8590c;
   transition: width 0.6s ease;
+}
+
+.modalOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal {
+  background: white;
+  padding: 30px;
+  border-radius: 16px;
+  width: 320px;
+  text-align: center;
+
+  animation: pop 0.25s ease;
+}
+
+.modal input {
+  width: 100%;
+  padding: 12px;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+  margin: 15px 0;
+}
+
+.modal button {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 10px;
+  background: #e8590c;
+  color: white;
+  cursor: pointer;
+}
+
+@keyframes pop {
+  from { transform: scale(0.9); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
 }

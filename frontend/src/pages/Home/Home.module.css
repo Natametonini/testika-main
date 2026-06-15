@@ -8,11 +8,9 @@
 
 .hero {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   padding: 120px 10%;
-  gap: 60px;
-  min-height: 80vh;
 }
 
 .heroText {
