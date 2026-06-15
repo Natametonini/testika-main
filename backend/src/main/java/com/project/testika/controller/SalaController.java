@@ -67,4 +67,18 @@ public class SalaController {
                 jResponses
         );
     }
+    
+    @PostMapping("/responder")
+    public ResponseEntity<?> responder(@RequestBody com.project.testika.dto.request.RespostaRequest request) {
+        try {
+            boolean acertou = salaService.responderPergunta(request);
+            if (acertou) {
+                return ResponseEntity.ok("Resposta CORRETA! Pontuação atualizada.");
+            } else {
+                return ResponseEntity.ok("Resposta INCORRETA! Pontuação mantida.");
+            }
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
 }

@@ -72,4 +72,42 @@ public class SalaService {
 
         return jogadorRepository.save(jogador);
     }
+    
+    public boolean responderPergunta(com.project.testika.dto.request.RespostaRequest request) {
+        JogadorEntity jogador = jogadorRepository.findById(request.getJogadorId())
+                .orElseThrow(() -> new RuntimeException("Jogador não encontrado!"));
+
+        // Busca a pergunta para garantir que ela existe
+        salaRepository.findById(jogador.getSala().getId()); 
+
+        // Encontra a alternativa escolhida dentro das alternativas da pergunta
+        boolean correta = false;
+        boolean alternativaValida = false;
+
+        for (com.project.testika.entity.PerguntaEntity p : jogador.getSala().getQuiz().getPerguntas()) {
+            if (p.getId().equals(request.getPerguntaId())) {
+                for (com.project.testika.entity.AlternativaEntity a : p.getAlternativas()) {
+                    if (a.getId().equals(request.getAlternativaId())) {
+                        alternativaValida = true;
+                        if (a.isCorreta()) {
+                            correta = true;
+                        }
+                        break;
+                    }
+                }
+            }
+        }
+
+        if (!alternativaValida) {
+            throw new RuntimeException("Esta alternativa não pertence a esta pergunta!");
+        }
+
+        // Se acertou, soma os pontos no banco de dados
+        if (correta) {
+            jogador.setPontuacao(jogador.getPontuacao() + 10); // 10 pontos por acerto
+            jogadorRepository.save(jogador);
+        }
+
+        return correta; // Retorna true se acertou e false se errou para o front mostrar o feedback visual
+    }
 }
