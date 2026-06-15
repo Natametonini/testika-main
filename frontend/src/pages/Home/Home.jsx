@@ -33,22 +33,24 @@ function Home() {
             Crie quizzes em tempo real, participe usando códigos e torne qualquer assunto mais interativo.
           </p>
 
-          <div className={styles.actions}>
-            <input
-              type="text"
-              placeholder="Digite o código da sala"
-              value={code}
-              onChange={(e) => setCode(e.target.value)}
-            />
+          <div className={styles.actionsCard}>
 
-            <button onClick={handleJoinRoom}>
-              Entrar na sala
-            </button>
+  <input
+    type="text"
+    placeholder="Digite o código da sala"
+    value={code}
+    onChange={(e) => setCode(e.target.value)}
+  />
 
-            <button className={styles.secondary}>
-              Criar sala
-            </button>
-          </div>
+  <button onClick={handleJoinRoom}>
+    Entrar na sala
+  </button>
+
+  <button className={styles.secondary}>
+    Criar sala
+  </button>
+
+</div>
         </motion.div>
 
         <motion.div
@@ -73,24 +75,26 @@ function Home() {
       </section>
 
       {/* STATS */}
-      <section className={styles.stats}>
-        <div>
-          <h2>10k+</h2>
-          <p>Quizzes criados</p>
-        </div>
+      <section className={styles.statsSection}>
 
-        <div>
-          <h2>50k+</h2>
-          <p>Alunos ativos</p>
-        </div>
+  <div className={styles.statCard}>
+    <h2>10k+</h2>
+    <p>Quizzes criados</p>
+  </div>
 
-        <div>
-          <h2>1M+</h2>
-          <p>Respostas enviadas</p>
-        </div>
-      </section>
+  <div className={styles.statCard}>
+    <h2>50k+</h2>
+    <p>Alunos ativos</p>
+  </div>
 
-      {/* HOW IT WORKS */}
+  <div className={styles.statCard}>
+    <h2>1M+</h2>
+    <p>Respostas enviadas</p>
+  </div>
+
+</section>
+
+      {/* HOW */}
       <section className={styles.how}>
         <h2>Como funciona</h2>
 
