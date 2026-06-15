@@ -1,19 +1,24 @@
-import styles from "./Footer.module.css";
 import {
   FaInstagram,
-  FaGithub,
-  FaLinkedin
+  FaLinkedin,
+  FaGithub
 } from "react-icons/fa";
+
+import styles from "./Footer.module.css";
 
 function Footer() {
   return (
     <footer className={styles.footer}>
-      <p>© 2026 Testika</p>
+      <p>
+        © 2026 Testika
+      </p>
 
-      <div>
+      <div className={styles.socials}>
         <FaInstagram />
-        <FaGithub />
+
         <FaLinkedin />
+
+        <FaGithub />
       </div>
     </footer>
   );
