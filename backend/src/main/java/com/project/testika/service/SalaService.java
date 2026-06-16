@@ -110,4 +110,10 @@ public class SalaService {
 
         return correta; // Retorna true se acertou e false se errou para o front mostrar o feedback visual
     }
+    
+    // Atualizar a tela de jogadores da Sala
+    public SalaEntity buscarPorPin(String pin) {
+        return salaRepository.findByPin(pin)
+                .orElseThrow(() -> new RuntimeException("Sala com o código " + pin + " não foi encontrada!"));
+    }
 }

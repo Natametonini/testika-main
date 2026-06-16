@@ -1,12 +1,29 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
+import { useAuth } from "../../context/Auth"; // Contexto que vocês já usam
 
 import styles from "./Home.module.css";
+
+const mockQuestions = [
+  {
+    question: "Qual linguagem o React utiliza?",
+    options: ["Java", "Python", "JavaScript", "C++"],
+    answer: 2,
+  },
+  {
+    question: "Quem criou o React?",
+    options: ["Google", "Facebook", "Microsoft", "Apple"],
+    answer: 1,
+  },
+];
 
 function Home() {
   const [code, setCode] = useState("");
   const navigate = useNavigate();
+
+  // 🚀 ADICIONAMOS O handleCreateRoom VINDO DIRETO DO CONTEXTO GLOBAL
+  const { user, login, handleCreateRoom } = useAuth(); 
 
   // 1. FUNÇÃO PARA ENTRAR NA SALA (ALUNO)
   async function handleJoinRoom() {
@@ -22,7 +39,7 @@ function Home() {
     }
 
     try {
-      const response = await fetch(`http://{import.meta.env.VITE_API_URL}/api/salas/entrar/${code.trim()}`, {
+      const response = await fetch(`http://localhost:8080/api/salas/entrar/${code.trim()}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -36,51 +53,13 @@ function Home() {
       }
 
       const jogadorData = await response.json();
-      
-      // Salva os dados do jogador e o tipo dele (ALUNO) para a tela da sala usar
+
       localStorage.setItem("testika_user_data", JSON.stringify(jogadorData));
       localStorage.setItem("testika_user_role", "ALUNO");
 
-      // Redireciona para a página da sala
       navigate(`/sala?code=${code.trim()}`);
-
     } catch (error) {
       alert(`Ops! ${error.message}`);
-    }
-  }
-
-  // 2. FUNÇÃO PARA CRIAR A SALA (PROVISÓRIO COM QUIZ ID = 1)
-  async function handleCreateRoom() {
-    const quizIdDefeito = 2; // ID do Quiz que já deve existir no seu banco de dados
-
-    try {
-      const response = await fetch(`http://{import.meta.env.VITE_API_URL}/api/salas/criar/${quizIdDefeito}`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        }
-      });
-
-      if (!response.ok) {
-        const errorText = await response.text();
-        throw new Error(errorText || "Erro ao criar a sala.");
-      }
-
-      // Recebe o objeto Sala que seu Spring Boot devolveu (com o PIN gerado)
-      const salaData = await response.json();
-      const pinGerado = salaData.pin; // Garanta que o atributo no seu Java se chama 'pin'
-
-      // Salva que este usuário é o dono da sala (PROFESSOR)
-      localStorage.setItem("testika_user_role", "PROFESSOR");
-      localStorage.setItem("testika_sala_data", JSON.stringify(salaData));
-
-      alert(`Sala criada com sucesso! O código é: ${pinGerado}`);
-
-      // Redireciona para a mesma página de sala, mas com o PIN gerado pelo seu banco
-      navigate(`/sala?code=${pinGerado}`);
-
-    } catch (error) {
-      alert(`Erro ao criar sala: ${error.message}`);
     }
   }
 
@@ -117,7 +96,7 @@ function Home() {
               Entrar na sala
             </button>
 
-            {/* ATRELAMOS A FUNÇÃO DE CRIAR AQUI */}
+            {/* 🚀 O BOTÃO DO MEIO CONTINUA FUNCIONANDO IGUAL, MAS CHAMA A FUNÇÃO DO CONTEXTO */}
             <button className={styles.secondary} onClick={handleCreateRoom}>
               Criar sala
             </button>
@@ -130,39 +109,32 @@ function Home() {
 
       {/* STATS */}
       <section className={styles.statsSection}>
-
         <div className={styles.statCard}>
           <h2>10k+</h2>
           <p>Quizzes criados</p>
         </div>
-
         <div className={styles.statCard}>
           <h2>50k+</h2>
           <p>Alunos ativos</p>
         </div>
-
         <div className={styles.statCard}>
           <h2>1M+</h2>
           <p>Respostas enviadas</p>
         </div>
-
       </section>
 
       {/* HOW */}
       <section className={styles.how}>
         <h2 className={styles.titleHow}>Como funciona</h2>
-
         <div className={styles.grid}>
           <div>
             <h3>1. Crie</h3>
             <p>Monte quizzes personalizados em poucos cliques.</p>
           </div>
-
           <div>
             <h3>2. Compartilhe</h3>
             <p>Envie o código da sala para seus alunos.</p>
           </div>
-
           <div>
             <h3>3. Jogue</h3>
             <p>Responda em tempo real e veja o ranking ao vivo.</p>

@@ -1,29 +1,25 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useAuth } from "../../context/Auth";
 import logo from "./Logo.png";
 
 import styles from "./Navbar.module.css";
 
 function Navbar() {
-  const { user, login } = useAuth();
-  const navigate = useNavigate();
+  // 🚀 IMPORTAMOS O 'handleCreateRoom' QUE CRIAMOS NO CONTEXTO GLOBAL
+  const { user, login, handleCreateRoom } = useAuth();
 
-  function handleCreateRoom() {
-    if (!user) {
-      const name = prompt("Digite seu nome para continuar:");
-      if (!name) return;
-      login(name);
-    }
-
-    navigate("/sala?host=true");
+  // 🚀 NOVA LOGICA DO CLIQUE
+  function cliqueCriarSala() {
+    // Dispara a função global que vai no seu Java, cria a sala e redireciona
+    handleCreateRoom();
   }
 
   return (
     <header className={styles.header}>
       <nav className={styles.nav}>
         <Link to="/" className={styles.logoWrapper}>
-  <img src={logo} alt="Testika logo" className={styles.logo} />
-</Link>
+          <img src={logo} alt="Testika logo" className={styles.logo} />
+        </Link>
 
         <div className={styles.links}>
           <Link to="/">Home</Link>
@@ -31,7 +27,8 @@ function Navbar() {
           <Link to="/planos">Planos</Link>
         </div>
 
-        <button onClick={handleCreateRoom}>
+        {/* 🚀 AGORA O BOTÃO CHAMA A FUNÇÃO CORRETA CONECTADA À API */}
+        <button onClick={cliqueCriarSala}>
           Criar Sala
         </button>
       </nav>

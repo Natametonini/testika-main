@@ -41,4 +41,5 @@ public class SalaEntity {
 
     public List<JogadorEntity> getJogadores() { return jogadores; }
     public void setJogadores(List<JogadorEntity> jogadores) { this.jogadores = jogadores; }
+    
 }

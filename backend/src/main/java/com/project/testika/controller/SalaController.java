@@ -81,4 +81,11 @@ public class SalaController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
+    
+    @GetMapping("/{code}/jogadores")
+    public ResponseEntity<List<JogadorEntity>> obterJogadoresdaSala(@PathVariable String code) {
+        // Busca a sala pelo PIN, pega a lista de jogadores dela e retorna
+        List<JogadorEntity> jogadores = salaService.buscarPorPin(code).getJogadores();
+        return ResponseEntity.ok(jogadores);
+    }
 }
