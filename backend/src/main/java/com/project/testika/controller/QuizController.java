@@ -9,6 +9,7 @@ import com.project.testika.entity.PerguntaEntity;
 import com.project.testika.entity.AlternativaEntity;
 import com.project.testika.service.QuizService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -93,5 +94,30 @@ public class QuizController {
                 quiz.isPublico(),
                 pResponses
         );
+    }
+    
+    @PostMapping("/criar-lista")
+    public ResponseEntity<?> criarListaDeQuizzes(@RequestBody List<QuizRequest> listaRequest) {
+        try {
+            // Chama o service passando a lista completa
+            List<QuizEntity> quizzesCriados = quizService.salvarListaDeQuizzes(listaRequest);
+            
+            return ResponseEntity.status(HttpStatus.CREATED)
+                    .body("Sucesso! Criados " + quizzesCriados.size() + " quizzes de uma vez.");
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("Erro ao criar lista: " + e.getMessage());
+        }
+    }
+    
+    @GetMapping
+    public ResponseEntity<List<QuizResponse>> listarTodos() {
+        // Busca absolutamente todos os quizzes do banco
+        List<QuizEntity> quizzes = quizService.listarTodos(); // Ajuste se no seu service for outro nome (ex: findAll)
+        
+        List<QuizResponse> responseList = new ArrayList<>();
+        for (QuizEntity q : quizzes) {
+            responseList.add(converterParaResponse(q));
+        }
+        return ResponseEntity.ok(responseList);
     }
 }

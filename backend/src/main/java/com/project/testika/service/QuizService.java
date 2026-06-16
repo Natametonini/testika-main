@@ -9,9 +9,13 @@ import com.project.testika.entity.AlternativaEntity;
 import com.project.testika.entity.UsuarioEntity;
 import com.project.testika.repository.QuizRepository;
 import com.project.testika.repository.UsuarioRepository;
+
+import jakarta.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -83,5 +87,25 @@ public class QuizService {
 
         // 3. Se passou pela validação, deleta com segurança
         quizRepository.delete(quiz);
+    }
+    
+    @Transactional
+    public List<QuizEntity> salvarListaDeQuizzes(List<QuizRequest> listaRequest) {
+        List<QuizEntity> quizzesSalvos = new ArrayList<>();
+
+        for (QuizRequest request : listaRequest) {
+            // Aqui você pode chamar direto o método que o seu `/api/quizzes/criar` já usa internamente!
+            // Supondo que o seu método atual se chame 'salvarQuiz':
+            QuizEntity novoQuiz = criarQuiz(request); 
+            
+            quizzesSalvos.add(novoQuiz);
+        }
+
+        return quizzesSalvos;
+    }
+    
+    public List<QuizEntity> listarTodos() {
+        // Retorna absolutamente todos os quizzes salvos na tabela do banco de dados
+        return quizRepository.findAll();
     }
 }
