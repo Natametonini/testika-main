@@ -114,7 +114,7 @@
   grid-template-columns: repeat(3, 1fr);
   gap: 20px;
 
-  padding: 0 10% 80px;
+  padding: 0 10% 160px;
   margin-top: 40px;
 }
 
@@ -144,6 +144,10 @@
 }
 
 /* HOW */
+
+.titleHow {
+  margin-bottom: 60px;
+}
 
 .how {
   padding: 0 10% 80px;

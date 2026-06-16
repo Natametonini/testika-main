@@ -95,22 +95,6 @@
   align-items: center;
 }
 
-/* TIMER */
-
-.timer {
-  width: 100%;
-  height: 10px;
-  background: #eee;
-  border-radius: 20px;
-  overflow: hidden;
-}
-
-.timer div {
-  height: 100%;
-  background: #e8590c;
-  transition: width 1s linear;
-}
-
 /* OPTIONS */
 
 .options {

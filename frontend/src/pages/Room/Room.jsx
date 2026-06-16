@@ -28,7 +28,6 @@ function Room() {
 
   const [current, setCurrent] = useState(0);
   const [selected, setSelected] = useState(null);
-  const [time, setTime] = useState(10);
   const [score, setScore] = useState(0);
   
     //  MODAL LOGIN
@@ -44,23 +43,6 @@ function Room() {
   }
   }, []);
 
-  // TIMER
-  useEffect(() => {
-    if (phase !== "playing") return;
-    if (phase === "finished") return;
-
-    if (time === 0) {
-      nextQuestion();
-      return;
-    }
-
-    const interval = setInterval(() => {
-      setTime((t) => t - 1);
-    }, 1000);
-
-    return () => clearInterval(interval);
-  }, [time, phase]);
-
   function selectOption(index) {
     setSelected(index);
 
@@ -69,17 +51,6 @@ function Room() {
     }
 
     setTimeout(nextQuestion, 800);
-  }
-
-  function nextQuestion() {
-    setSelected(null);
-    setTime(10);
-
-    if (current < mockQuestions.length - 1) {
-      setCurrent((c) => c + 1);
-    } else {
-      setPhase("finished");
-    }
   }
 
   /* ---------------- LOADING NAME MODAL ---------------- */
@@ -220,13 +191,9 @@ function Room() {
           Menu
         </button>
 
-        <h3>{code}</h3>
+        <h3>Código da sala: {code}</h3>
 
         <span>{user?.name}</span>
-      </div>
-
-      <div className={styles.timer}>
-        <div style={{ width: `${time * 10}%` }} />
       </div>
 
       <h1>{question.question}</h1>

@@ -78,7 +78,7 @@ function Home() {
 
       {/* HOW */}
       <section className={styles.how}>
-        <h2>Como funciona</h2>
+        <h2 className={styles.titleHow}>Como funciona</h2>
 
         <div className={styles.grid}>
           <div>
