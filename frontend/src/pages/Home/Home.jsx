@@ -22,7 +22,7 @@ function Home() {
     }
 
     try {
-      const response = await fetch(`http://localhost:8080/api/salas/entrar/${code.trim()}`, {
+      const response = await fetch(`http://{import.meta.env.VITE_API_URL}/api/salas/entrar/${code.trim()}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -54,7 +54,7 @@ function Home() {
     const quizIdDefeito = 2; // ID do Quiz que já deve existir no seu banco de dados
 
     try {
-      const response = await fetch(`http://localhost:8080/api/salas/criar/${quizIdDefeito}`, {
+      const response = await fetch(`http://{import.meta.env.VITE_API_URL}/api/salas/criar/${quizIdDefeito}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
