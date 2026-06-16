@@ -1,0 +1,135 @@
+.container {
+  max-width: 900px;
+  margin: 40px auto;
+  padding: 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #333;
+}
+
+.header {
+  margin-bottom: 30px;
+}
+
+.btnVoltar {
+  background: #ff9100;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  margin-bottom: 15px;
+  transition: 0.2s;
+}
+
+.btnVoltar:hover {
+  background: #cc7400;
+}
+
+.quizList {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.quizCard {
+  border: 1px solid #e0e0e0;
+  border-radius: 10px;
+  background: #fff;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+}
+
+.quizHeader {
+  padding: 20px;
+  background: #fafafa;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.quizHeader:hover {
+  background: #f4f4f4;
+}
+
+.quizHeader h2 {
+  margin: 0 0 8px 0;
+  font-size: 1.3rem;
+}
+
+.badgeMateria {
+  background: #4a90e2;
+  color: #fff;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: bold;
+}
+
+.btnExpandir {
+  background: none;
+  border: none;
+  color: #4a90e2;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.quizBody {
+  padding: 20px;
+  background: #fff;
+  border-top: 1px solid #e0e0e0;
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+.questionBox {
+  background: #f9f9f9;
+  padding: 15px;
+  border-radius: 8px;
+  border-left: 4px solid #4a90e2;
+}
+
+.enunciado {
+  font-size: 1.1rem;
+  margin-top: 0;
+  margin-bottom: 15px;
+}
+
+.optionsGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+@media (max-width: 600px) {
+  .optionsGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.optionCard {
+  background: #fff;
+  border: 1px solid #dcdcdc;
+  padding: 12px;
+  border-radius: 6px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.95rem;
+}
+
+.optionCard.correct {
+  background: #e6f4ea;
+  border-color: #34a853;
+  color: #137333;
+  font-weight: 600;
+}
+
+.loader, .emptyState {
+  text-align: center;
+  padding: 40px;
+  font-size: 1.2rem;
+  color: #666;
+}

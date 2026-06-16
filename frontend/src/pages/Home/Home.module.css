@@ -182,3 +182,24 @@
     flex-direction: column;
   }
 }
+
+/* 🚀 CLASSE DO NOVO BOTÃO ADICIONADA AQUI: */
+.bankButton {
+  background: #0390ee !important; /* Verde para destacar bem a funcionalidade */
+  color: white !important;
+  border: none;
+  padding: 12px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: 0.2s;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.bankButton:hover {
+  background: #046baf !important;
+  transform: translateY(-2px);
+}

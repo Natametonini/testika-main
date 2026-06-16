@@ -62,6 +62,11 @@ function Home() {
               Criar sala
             </button>
 
+            {/* 🚀 BOTÃO DO BANCO DE QUESTÕES ENCAIXADO AQUI: */}
+            <button className={styles.bankButton} onClick={() => navigate("/banco-de-questoes")}>
+              Banco de Questões
+            </button>
+
           </div>
 
         </motion.div>
