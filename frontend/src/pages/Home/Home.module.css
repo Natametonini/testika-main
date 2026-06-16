@@ -2,24 +2,28 @@
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  background-color: #fafafa;
+  font-family: sans-serif;
 }
 
 /* HERO */
-
 .hero {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
-  padding: 120px 10%;
+  padding: 100px 10%;
+  gap: 60px;
 }
 
 .heroText {
-  flex: 1;
+  flex: 1.2;
 }
 
 .heroText h1 {
   font-size: 52px;
   line-height: 1.1;
+  color: #222;
+  margin: 0;
 }
 
 .heroText span {
@@ -28,94 +32,162 @@
 
 .heroText p {
   margin-top: 20px;
+  margin-bottom: 30px;
   color: #666;
+  font-size: 18px;
+  line-height: 1.5;
   max-width: 500px;
 }
 
-/* ACTIONS */
-
+/* ACTIONS CARD (ALUNO) */
 .actionsCard {
-  margin-top: 30px;
   display: flex;
-  flex-direction: column;
   gap: 12px;
-
   background: white;
-  padding: 20px;
+  padding: 16px;
   border-radius: 16px;
-  box-shadow: 0 15px 40px rgba(0,0,0,0.08);
-
-  width: 320px;
+  box-shadow: 0 15px 40px rgba(0,0,0,0.06);
+  max-width: 450px;
+  margin-bottom: 24px;
 }
 
 .actionsCard input {
-  padding: 12px;
+  flex: 1;
+  padding: 14px;
   border-radius: 10px;
-  border: 1px solid #ddd;
+  border: 2px solid #eee;
   outline: none;
+  font-size: 16px;
+  transition: 0.2s;
 }
 
 .actionsCard input:focus {
   border-color: #e8590c;
 }
 
-.actionsCard button {
+.primaryBtn {
   background: #e8590c;
   color: white;
   border: none;
-  padding: 12px;
+  padding: 0 24px;
   border-radius: 10px;
+  font-weight: bold;
+  font-size: 16px;
   cursor: pointer;
   transition: 0.2s;
 }
 
-.actionsCard button:hover {
+.primaryBtn:hover {
+  background: #d94e05;
   transform: translateY(-2px);
 }
 
-.secondary {
-  background: transparent !important;
-  border: 1px solid #e8590c !important;
-  color: #e8590c !important;
+/* TEACHER ACTIONS (PROFESSOR) */
+.teacherActions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
 }
 
-/* HERO CARD */
+.teacherActions span {
+  font-size: 14px;
+  color: #888;
+  font-weight: 500;
+}
 
+.teacherActions button {
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.secondary {
+  background: transparent;
+  border: 1px solid #e8590c;
+  color: #e8590c;
+}
+
+.secondary:hover {
+  background: #e8e8e7;
+  transform: translateY(-1px);
+}
+
+.bankButton {
+  background: #e8590c;
+  color: white;
+  border: none;
+}
+
+.bankButton:hover {
+  background: #d94e05;
+  transform: translateY(-1px);
+}
+
+/* HERO CARD (O QUIZ ILUSTRATIVO) */
 .heroCard {
   flex: 1;
   background: #fff7ed;
-  padding: 30px;
+  padding: 35px;
+  border-radius: 24px;
+  box-shadow: 0 20px 40px rgba(232, 89, 12, 0.1);
+  border: 2px solid #ffedd5;
+  max-width: 450px;
+}
+
+.badge {
+  background: #ffedd5;
+  color: #e8590c;
+  padding: 4px 12px;
   border-radius: 20px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+  font-size: 12px;
+  font-weight: bold;
 }
 
 .mock h3 {
-  margin-bottom: 10px;
+  margin: 20px 0;
+  font-size: 22px;
+  color: #431407;
 }
 
 .options {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 10px;
-  margin-top: 20px;
+  gap: 12px;
 }
 
 .options span {
-  background: white;
-  padding: 10px;
-  border-radius: 10px;
-  text-align: center;
+  padding: 14px;
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 14px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.02);
+  border: 1px solid #fed7aa;
+  cursor: default;
 }
 
-/* STATS */
+.optIntermediaria {
+  background-color: white;
+}
 
+.optErrada {
+  background-color: #f53c3c;
+}
+
+.optCorreta {
+  background-color: #0bc03e;
+}
+
+
+/* STATS */
 .statsSection {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 20px;
-
-  padding: 0 10% 160px;
-  margin-top: 40px;
+  padding: 0 10% 120px;
 }
 
 .statCard {
@@ -123,9 +195,7 @@
   padding: 25px;
   border-radius: 15px;
   text-align: center;
-
-  box-shadow: 0 10px 25px rgba(0,0,0,0.05);
-
+  box-shadow: 0 10px 25px rgba(0,0,0,0.03);
   transition: 0.2s;
 }
 
@@ -135,23 +205,24 @@
 
 .statCard h2 {
   color: #e8590c;
-  font-size: 32px;
+  font-size: 36px;
+  margin: 0 0 5px 0;
 }
 
 .statCard p {
   color: #666;
-  margin-top: 5px;
+  margin: 0;
 }
 
 /* HOW */
-
-.titleHow {
-  margin-bottom: 60px;
+.how {
+  padding: 8px 10% 80px;
+  text-align: center;
 }
 
-.how {
-  padding: 0 10% 80px;
-  text-align: center;
+.titleHow {
+  margin-bottom: 40px;
+  font-size: 28px;
 }
 
 .grid {
@@ -162,44 +233,44 @@
 
 .grid div {
   background: white;
-  padding: 20px;
+  padding: 30px 20px;
   border-radius: 15px;
-  box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.03);
+}
+
+.grid h3 {
+  margin-top: 0;
+  color: #e8590c;
 }
 
 /* RESPONSIVO */
-
-@media (max-width: 900px) {
+@media (max-width: 990px) {
   .hero {
     flex-direction: column;
+    text-align: center;
+    padding: 60px 5%;
+    gap: 40px;
   }
 
-  .grid {
+  .heroText p {
+    margin: 20px auto 30px auto;
+  }
+
+  .actionsCard {
+    margin: 0 auto 24px auto;
+    width: 100%;
+  }
+
+  .teacherActions {
+    justify-content: center;
+  }
+
+  .heroCard {
+    width: 100%;
+  }
+
+  .grid, .statsSection {
     grid-template-columns: 1fr;
+    padding: 20px 5% 60px;
   }
-
-  .stats {
-    flex-direction: column;
-  }
-}
-
-/* 🚀 CLASSE DO NOVO BOTÃO ADICIONADA AQUI: */
-.bankButton {
-  background: #0390ee !important; /* Verde para destacar bem a funcionalidade */
-  color: white !important;
-  border: none;
-  padding: 12px;
-  border-radius: 10px;
-  cursor: pointer;
-  transition: 0.2s;
-  font-weight: 600;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-}
-
-.bankButton:hover {
-  background: #046baf !important;
-  transform: translateY(-2px);
 }

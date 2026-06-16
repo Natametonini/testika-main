@@ -8,20 +8,14 @@ import styles from "./Home.module.css";
 function Home() {
   const [code, setCode] = useState("");
   const navigate = useNavigate();
-
   const { handleCreateRoom } = useAuth(); 
 
-  // 1. FUNÇÃO PARA ENTRAR NA SALA (ALUNO) - ATUALIZADA SEM PROMPT FEIO
   async function handleJoinRoom() {
     if (!code.trim()) {
       alert("Por favor, digite o código da sala!");
       return;
     }
-
-    // Sinaliza que este usuário está entrando no fluxo como ALUNO
     localStorage.setItem("testika_user_role", "ALUNO");
-
-    // Redireciona direto para a página da sala.
     navigate(`/sala?code=${code.trim()}`);
   }
 
@@ -31,6 +25,7 @@ function Home() {
       {/* HERO */}
       <section className={styles.hero}>
 
+        {/* LADO ESQUERDO: TEXTO E ENTRADA DE CÓDIGO */}
         <motion.div
           className={styles.heroText}
           initial={{ opacity: 0, x: -40 }}
@@ -42,33 +37,51 @@ function Home() {
           </h1>
 
           <p>
-            Crie quizzes in tempo real, participe usando códigos e torne qualquer assunto mais interativo.
+            Crie quizzes em tempo real, participe usando códigos e torne qualquer assunto mais interativo.
           </p>
 
+          {/* Card focado no Aluno (Digitar Código) */}
           <div className={styles.actionsCard}>
-
             <input
               type="text"
-              placeholder="Digite o código da sala"
+              placeholder="Digite o código da sala (Ex: 1234)"
               value={code}
               onChange={(e) => setCode(e.target.value)}
             />
-
-            <button onClick={handleJoinRoom}>
+            <button className={styles.primaryBtn} onClick={handleJoinRoom}>
               Entrar na sala
             </button>
+          </div>
 
+          {/* Área do Professor (Separada e discreta, abaixo do card principal) */}
+          <div className={styles.teacherActions}>
+            <span>É professor?</span>
             <button className={styles.secondary} onClick={handleCreateRoom}>
               Criar sala
             </button>
-
-            {/* 🚀 BOTÃO DO BANCO DE QUESTÕES ENCAIXADO AQUI: */}
             <button className={styles.bankButton} onClick={() => navigate("/banco-de-questoes")}>
               Banco de Questões
             </button>
-
           </div>
+        </motion.div>
 
+        {/* LADO DIREITO: O CARD QUE ESTAVA FALTANDO! (Simulação do Quiz) */}
+        <motion.div 
+          className={styles.heroCard}
+          initial={{ opacity: 0, x: 40 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+        >
+          <div className={styles.mock}>
+            <span className={styles.badge}>Pergunta 1 de 5</span>
+            <h3>Qual é o melhor site de aprendizado em Quizzes? </h3>
+            <div className={styles.options}>
+              <span className={styles.optCorreta}>🔴 Testika</span>
+              <span className={styles.optErrada}>🟣 Kahoot</span>
+              <span className={styles.optIntermediaria}>🟢 Quizizz</span>
+              <span className={styles.optIntermediaria}>🟡 Genially</span>
+            </div>
+          </div>
         </motion.div>
 
       </section>
