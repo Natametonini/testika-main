@@ -15,6 +15,32 @@ const mockQuestions = [
     options: ["Google", "Facebook", "Microsoft", "Apple"],
     answer: 1,
   },
+  {
+    question: "O que é uma thread?",
+    options: ["É de comer", "Primo do ET Bilu", "Quando ocorre a transição de energia de um objeto a outro", "é a menor unidade de processamento que pode ser gerenciada por um sistema operacional"],
+    answer: 3,
+  },
+  {
+    question: "Quando a linguagem java foi criada?",
+    options: ["1956", "2001", "1997", "1991"],
+    answer: 3,
+  },
+  {
+    question: "Qual desses é um framework de Java?",
+    options: ["React", "NodeJS", "Sringboot", "Bootstrap"],
+    answer: 2,
+  },
+  {
+    question: "Qual o banco de dados mais utilizado no mundo?",
+    options: ["MySQL", "MongoDB", "PostgreSQL", "Oracle"],
+    answer: 3,
+  },
+  {
+    question: "O que signfica JSON?",
+    options: ["JavaScript Object Notation", "JavaScript Ordinary Name", "Java String Object Notation" , "Java Source Object Name"],
+    answer: 0,
+  }
+
 ];
 
 function Room() {
