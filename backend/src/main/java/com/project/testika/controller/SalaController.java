@@ -59,25 +59,41 @@ public class SalaController {
                 jResponses.add(new JogadorResponse(j.getId(), j.getNickname(), j.getPontuacao(), j.getOrdemPerguntas()));
             }
         }
+        
+        // 🚀 Passando a lista de perguntas do quiz associado à sala para o construtor do DTO
         return new SalaResponse(
                 sala.getId(),
                 sala.getPin(),
                 sala.getStatus(),
                 sala.getQuiz().getId(),
-                jResponses
+                jResponses,
+                sala.getQuiz().getPerguntas() 
         );
     }
     
     @PostMapping("/responder")
     public ResponseEntity<?> responder(@RequestBody com.project.testika.dto.request.RespostaRequest request) {
         try {
-            boolean acertou = salaService.responderPergunta(request);
-            if (acertou) {
-                return ResponseEntity.ok("Resposta CORRETA! Pontuação atualizada.");
-            } else {
-                return ResponseEntity.ok("Resposta INCORRETA! Pontuação mantida.");
-            }
+            // Recebe o objeto completo com o resultado e os pontos
+            com.project.testika.dto.response.RespostaResponse resultado = salaService.responderPergunta(request);
+            
+            // Devolve o objeto inteiro como JSON com status 200 OK
+            return ResponseEntity.ok(resultado);
         } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+    
+    @PutMapping("/{code}/iniciar")
+    public ResponseEntity<?> iniciarSala(@PathVariable String code) {
+        try {
+            // Chama o service para mudar o status da sala no banco
+            com.project.testika.entity.SalaEntity salaAtualizada = salaService.iniciarQuiz(code);
+            
+            // Devolve a sala com status 200 OK para o Front-end saber que deu certo
+            return ResponseEntity.ok(salaAtualizada);
+        } catch (Exception e) {
+            // Se a sala não existir ou já tiver começado, devolve o erro
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
@@ -87,5 +103,19 @@ public class SalaController {
         // Busca a sala pelo PIN, pega a lista de jogadores dela e retorna
         List<JogadorEntity> jogadores = salaService.buscarPorPin(code).getJogadores();
         return ResponseEntity.ok(jogadores);
+    }
+    
+ // Retorna os dados completos da sala (Status + Jogadores) para o Polling do React
+    @GetMapping("/{code}")
+    public ResponseEntity<?> obterDadosDaSala(@PathVariable String code) {
+        try {
+            // Busca a entidade da sala usando o método que você já tem no service
+            SalaEntity sala = salaService.buscarPorPin(code);
+            
+            // Converte usando o seu helper para não dar loop de JSON e retorna
+            return ResponseEntity.ok(converterParaSalaResponse(sala));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 }

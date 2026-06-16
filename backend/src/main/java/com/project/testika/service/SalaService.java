@@ -73,17 +73,14 @@ public class SalaService {
         return jogadorRepository.save(jogador);
     }
     
-    public boolean responderPergunta(com.project.testika.dto.request.RespostaRequest request) {
+    public com.project.testika.dto.response.RespostaResponse responderPergunta(com.project.testika.dto.request.RespostaRequest request) {
         JogadorEntity jogador = jogadorRepository.findById(request.getJogadorId())
                 .orElseThrow(() -> new RuntimeException("Jogador não encontrado!"));
 
-        // Busca a pergunta para garantir que ela existe
-        salaRepository.findById(jogador.getSala().getId()); 
-
-        // Encontra a alternativa escolhida dentro das alternativas da pergunta
         boolean correta = false;
         boolean alternativaValida = false;
 
+        // Varia as perguntas do Quiz da Sala do jogador
         for (com.project.testika.entity.PerguntaEntity p : jogador.getSala().getQuiz().getPerguntas()) {
             if (p.getId().equals(request.getPerguntaId())) {
                 for (com.project.testika.entity.AlternativaEntity a : p.getAlternativas()) {
@@ -108,12 +105,30 @@ public class SalaService {
             jogadorRepository.save(jogador);
         }
 
-        return correta; // Retorna true se acertou e false se errou para o front mostrar o feedback visual
+        // Devolve se acertou E a pontuação atualizada do banco!
+        return new com.project.testika.dto.response.RespostaResponse(correta, jogador.getPontuacao());
     }
     
     // Atualizar a tela de jogadores da Sala
     public SalaEntity buscarPorPin(String pin) {
         return salaRepository.findByPin(pin)
                 .orElseThrow(() -> new RuntimeException("Sala com o código " + pin + " não foi encontrada!"));
+    }
+    
+    public com.project.testika.entity.SalaEntity iniciarQuiz(String pin) {
+        // 1. Busca a sala pelo PIN (use o método de buscar que você já tiver no repository)
+        com.project.testika.entity.SalaEntity sala = salaRepository.findByPin(pin)
+                .orElseThrow(() -> new RuntimeException("Sala não encontrada com o PIN fornecido!"));
+
+        // 2. Valida se a sala já não foi iniciada para evitar bugs de cliques duplos
+        if ("JOGANDO".equals(sala.getStatus())) {
+            throw new RuntimeException("O jogo já foi iniciado nesta sala!");
+        }
+
+        // 3. Altera o status para JOGANDO
+        sala.setStatus("JOGANDO");
+
+        // 4. Salva a alteração no banco de dados e retorna a sala atualizada
+        return salaRepository.save(sala);
     }
 }

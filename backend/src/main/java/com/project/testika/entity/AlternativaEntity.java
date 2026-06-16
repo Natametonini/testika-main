@@ -1,5 +1,7 @@
 package com.project.testika.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.*;
 
 @Entity
@@ -18,6 +20,7 @@ public class AlternativaEntity {
 
     @ManyToOne
     @JoinColumn(name = "pergunta_id", nullable = false)
+    @JsonIgnore
     private PerguntaEntity pergunta;
 
     public AlternativaEntity() {}

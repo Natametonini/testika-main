@@ -24,6 +24,9 @@ function Room() {
   const code = searchParams.get("code");
   const { user, login } = useAuth();
 
+  // 🚀 Resgatamos a role (PROFESSOR ou ALUNO) salva no localStorage
+  const role = localStorage.getItem("testika_user_role");
+
   const [phase, setPhase] = useState("lobby");
   const [current, setCurrent] = useState(0);
   const [selected, setSelected] = useState(null);
@@ -33,7 +36,7 @@ function Room() {
   const [showNameModal, setShowNameModal] = useState(false);
   const [tempName, setTempName] = useState("");
 
-  /* --- 🚀 ESTADO PARA GUARDAR OS JOGADORES DA API --- */
+  /* --- JOGADORES DA API --- */
   const [jogadores, setJogadores] = useState([]);
 
   const question = mockQuestions[current] || mockQuestions[0];
@@ -45,32 +48,66 @@ function Room() {
     }
   }, [user]);
 
-  /* --- 🚀 POLLING PARA BUSCAR JOGADORES DO BACKEND --- */
+  /* --- 🚀 POLLING ATUALIZADO: BUSCA OS DADOS DA SALA INTEIRA (STATUS + JOGADORES) --- */
   useEffect(() => {
-    // Se o modal estiver aberto ou não houver código de sala, não faz nada
     if (showNameModal || !code) return;
 
     const URL_API = import.meta.env.VITE_API_URL || "http://localhost:8080";
 
-    async function buscarJogadores() {
+    async function buscarDadosDaSala() {
       try {
-        const response = await fetch(`${URL_API}/api/salas/${code}/jogadores`);
+        // Chamamos o endpoint da sala cheia para monitorar as mudanças de estado
+        const response = await fetch(`${URL_API}/api/salas/${code}`);
         if (response.ok) {
-          const dados = await response.json();
-          setJogadores(dados);
+          const salaData = await response.json();
+          
+          // Atualiza a lista caso existam jogadores vinculados no JSON
+          if (salaData.jogadores) {
+            setJogadores(salaData.jogadores);
+          }
+
+          // 🚀 SE O STATUS FOR "JOGANDO", ARRASTA O ALUNO PARA O JOGO AUTOMATICAMENTE
+          if (salaData.status === "JOGANDO" && phase === "lobby") {
+            setPhase("playing");
+          }
         }
       } catch (error) {
-        console.error("Erro ao buscar jogadores do backend:", error);
+        console.error("Erro ao buscar dados da sala do backend:", error);
       }
     }
 
-    buscarJogadores();
-    const intervalo = setInterval(buscarJogadores, 2000);
+    buscarDadosDaSala();
+    const intervalo = setInterval(buscarDadosDaSala, 2000);
 
     return () => clearInterval(intervalo);
   }, [code, showNameModal, phase]);
 
-  /* ---------------- LOGIN MODAL (MODIFICADO) ---------------- */
+  /* --- 🚀 REQUISIÇÃO DO START (PROFESSOR ENVIA PRO JAVA) --- */
+  async function handleIniciarQuiz() {
+    const URL_API = import.meta.env.VITE_API_URL || "http://localhost:8080";
+    
+    try {
+      const response = await fetch(`${URL_API}/api/salas/${code}/iniciar`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json"
+        }
+      });
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        throw new Error(errorText || "Erro ao iniciar o quiz.");
+      }
+
+      // Muda o próprio professor de fase imediatamente
+      setPhase("playing");
+
+    } catch (error) {
+      alert(`Não foi possível iniciar o jogo: ${error.message}`);
+    }
+  }
+
+  /* ---------------- LOGIN MODAL (MANTIDO) ---------------- */
 
   if (showNameModal) {
     return (
@@ -91,7 +128,6 @@ function Room() {
               const role = localStorage.getItem("testika_user_role");
               const URL_API = import.meta.env.VITE_API_URL || "http://localhost:8080";
 
-              // 🚀 SE FOR ALUNO: Registra o jogador no banco de dados via API antes de fechar
               if (role === "ALUNO") {
                 try {
                   const response = await fetch(`${URL_API}/api/salas/entrar/${code.trim()}`, {
@@ -112,11 +148,10 @@ function Room() {
 
                 } catch (error) {
                   alert(`Ops! ${error.message}`);
-                  return; // Cancela o fechamento do modal caso a API rejeite
+                  return;
                 }
               }
 
-              // Salva o nome do usuário no contexto e fecha a modal bonita
               login(tempName.trim());
               setShowNameModal(false);
             }}
@@ -154,7 +189,7 @@ function Room() {
     }
   }
 
-  /* ---------------- LOBBY ---------------- */
+  /* ---------------- LOBBY (MODIFICADO COM FILTRO DE CONTROLE) ---------------- */
 
   if (phase === "lobby") {
     return (
@@ -162,7 +197,7 @@ function Room() {
         <div className={styles.lobbyCard}>
 
           <h1>Sala de Espera</h1>
-          <p>Aguardando início do quiz</p>
+          <p>{role === "PROFESSOR" ? "Você está no controle. Aguarde os alunos entrarem!" : "Aguardando início do quiz..."}</p>
 
           <div className={styles.infoBox}>
             <div>
@@ -171,7 +206,7 @@ function Room() {
             </div>
             <div>
               <span>Você</span>
-              <strong>{user?.name}</strong>
+              <strong>{user?.name} {role && `(${role})`}</strong>
             </div>
           </div>
 
@@ -192,12 +227,19 @@ function Room() {
             </div>
           </div>
 
-          <button
-            className={styles.primary}
-            onClick={() => setPhase("playing")}
-          >
-            Iniciar (demo)
-          </button>
+          {/* 🚀 LOGICA DE BOTÃO EXCLUSIVO DO PROFESSOR */}
+          {role === "PROFESSOR" ? (
+            <button
+              className={styles.primary}
+              onClick={handleIniciarQuiz}
+            >
+              Iniciar Jogo 🚀
+            </button>
+          ) : (
+            <div className={styles.loadingPlayers} style={{ margin: "20px 0" }}>
+              O professor vai iniciar a partida em breve...
+            </div>
+          )}
 
           <button
             className={styles.primary}

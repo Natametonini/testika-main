@@ -1,6 +1,7 @@
 package com.project.testika.dto.response;
 
 import java.util.List;
+import com.project.testika.entity.PerguntaEntity; // 🚀 Garanta a importação da sua entidade de perguntas
 
 public class SalaResponse {
     private Long id;
@@ -8,18 +9,21 @@ public class SalaResponse {
     private String status;
     private Long quizId;
     private List<JogadorResponse> jogadores;
+    private List<PerguntaEntity> perguntas; // 🚀 Novo atributo
 
     public SalaResponse() {}
 
-    public SalaResponse(Long id, String pin, String status, Long quizId, List<JogadorResponse> jogadores) {
+    // Construtor atualizado
+    public SalaResponse(Long id, String pin, String status, Long quizId, List<JogadorResponse> jogadores, List<PerguntaEntity> perguntas) {
         this.id = id;
         this.pin = pin;
         this.status = status;
         this.quizId = quizId;
         this.jogadores = jogadores;
+        this.perguntas = perguntas;
     }
 
-    // Getters e Setters
+    // Getters e Setters antigos mantidos...
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 
@@ -34,4 +38,8 @@ public class SalaResponse {
 
     public List<JogadorResponse> getJogadores() { return jogadores; }
     public void setJogadores(List<JogadorResponse> jogadores) { this.jogadores = jogadores; }
+
+    // 🚀 Novos Getters e Setters
+    public List<PerguntaEntity> getPerguntas() { return perguntas; }
+    public void setPerguntas(List<PerguntaEntity> perguntas) { this.perguntas = perguntas; }
 }

@@ -1,66 +1,28 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import { useAuth } from "../../context/Auth"; // Contexto que vocês já usam
+import { useAuth } from "../../context/Auth"; 
 
 import styles from "./Home.module.css";
-
-const mockQuestions = [
-  {
-    question: "Qual linguagem o React utiliza?",
-    options: ["Java", "Python", "JavaScript", "C++"],
-    answer: 2,
-  },
-  {
-    question: "Quem criou o React?",
-    options: ["Google", "Facebook", "Microsoft", "Apple"],
-    answer: 1,
-  },
-];
 
 function Home() {
   const [code, setCode] = useState("");
   const navigate = useNavigate();
 
-  // 🚀 ADICIONAMOS O handleCreateRoom VINDO DIRETO DO CONTEXTO GLOBAL
-  const { user, login, handleCreateRoom } = useAuth(); 
+  const { handleCreateRoom } = useAuth(); 
 
-  // 1. FUNÇÃO PARA ENTRAR NA SALA (ALUNO)
+  // 1. FUNÇÃO PARA ENTRAR NA SALA (ALUNO) - ATUALIZADA SEM PROMPT FEIO
   async function handleJoinRoom() {
     if (!code.trim()) {
       alert("Por favor, digite o código da sala!");
       return;
     }
 
-    const nickname = prompt("Digite seu nickname para entrar na sala:");
-    if (!nickname || !nickname.trim()) {
-      alert("Você precisa de um nickname para jogar!");
-      return;
-    }
+    // Sinaliza que este usuário está entrando no fluxo como ALUNO
+    localStorage.setItem("testika_user_role", "ALUNO");
 
-    try {
-      const response = await fetch(`http://localhost:8080/api/salas/entrar/${code.trim()}`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ nickname: nickname.trim() }),
-      });
-
-      if (!response.ok) {
-        const errorText = await response.text();
-        throw new Error(errorText || "Erro ao entrar na sala.");
-      }
-
-      const jogadorData = await response.json();
-
-      localStorage.setItem("testika_user_data", JSON.stringify(jogadorData));
-      localStorage.setItem("testika_user_role", "ALUNO");
-
-      navigate(`/sala?code=${code.trim()}`);
-    } catch (error) {
-      alert(`Ops! ${error.message}`);
-    }
+    // Redireciona direto para a página da sala.
+    navigate(`/sala?code=${code.trim()}`);
   }
 
   return (
@@ -80,7 +42,7 @@ function Home() {
           </h1>
 
           <p>
-            Crie quizzes em tempo real, participe usando códigos e torne qualquer assunto mais interativo.
+            Crie quizzes in tempo real, participe usando códigos e torne qualquer assunto mais interativo.
           </p>
 
           <div className={styles.actionsCard}>
@@ -96,7 +58,6 @@ function Home() {
               Entrar na sala
             </button>
 
-            {/* 🚀 O BOTÃO DO MEIO CONTINUA FUNCIONANDO IGUAL, MAS CHAMA A FUNÇÃO DO CONTEXTO */}
             <button className={styles.secondary} onClick={handleCreateRoom}>
               Criar sala
             </button>
