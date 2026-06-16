@@ -58,62 +58,62 @@ Tecnologias:
 ```text
 Testika
 │
-backend/
+├──backend/
+│    │
+│    ├── controller/
+│    │   ├── QuizController
+│    │   ├── SalaController
+│    │   └── UsuarioController
+│    │
+│    ├── dto/
+│    │   ├── request/
+│    │   └── response/
+│    │
+│    ├── entity/
+│    │   ├── AlternativaEntity
+│    │   ├── JogadorEntity
+│    │   ├── PerguntaEntity
+│    │   ├── QuizEntity
+│    │   ├── SalaEntity
+│    │   └── UsuarioEntity
+│    │
+│    ├── enums/
+│    │
+│    ├── repository/
+│    │
+│    ├── service/
+│    │   ├── QuizService
+│    │   ├── SalaService
+│    │   └── UsuarioService
+│    │
+│    └── TestikaApplication
 │
-├── controller/
-│   ├── QuizController
-│   ├── SalaController
-│   └── UsuarioController
-│
-├── dto/
-│   ├── request/
-│   └── response/
-│
-├── entity/
-│   ├── AlternativaEntity
-│   ├── JogadorEntity
-│   ├── PerguntaEntity
-│   ├── QuizEntity
-│   ├── SalaEntity
-│   └── UsuarioEntity
-│
-├── enums/
-│
-├── repository/
-│
-├── service/
-│   ├── QuizService
-│   ├── SalaService
-│   └── UsuarioService
-│
-└── TestikaApplication
-
-frontend/
-│
-├── components/
-│   ├── Footer
-│   ├── Layout
-│   └── Navbar
-│
-├── context/
-│   └── Auth.jsx
-│
-├── pages/
-│   ├── About
-│   ├── Home
-│   ├── Pricing
-│   ├── QuestionBank
-│   └── Room
-│
-├── routes/
-│   └── AppRoutes.jsx
-│
-├── styles/
-│   ├── globals.css
-│   └── variables.css
-│
-├── App.jsx
-└── main.jsx
+└──frontend/
+      │
+      ├── components/
+      │   ├── Footer
+      │   ├── Layout
+      │   └── Navbar
+      │
+      ├── context/
+      │   └── Auth.jsx
+      │
+      ├── pages/
+      │   ├── About
+      │   ├── Home
+      │   ├── Pricing
+      │   ├── QuestionBank
+      │   └── Room
+      │
+      ├── routes/
+      │   └── AppRoutes.jsx
+      │
+      ├── styles/
+      │   ├── globals.css
+      │   └── variables.css
+      │
+      ├── App.jsx
+      └── main.jsx
 ```
 
 ---
