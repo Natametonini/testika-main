@@ -41,8 +41,6 @@ export function AuthProvider({ children }) {
       localStorage.setItem("testika_user_role", "PROFESSOR");
       localStorage.setItem("testika_sala_data", JSON.stringify(salaData));
 
-      alert(`Sala criada com sucesso! O código é: ${pinGerado}`);
-
       // Redireciona usando a API nativa do navegador
       window.location.href = `/sala?code=${pinGerado}`;
 
