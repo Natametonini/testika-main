@@ -305,7 +305,9 @@ function Room() {
   return (
     <div className={styles.room}>
       <div className={styles.header}>
-        <button onClick={() => navigate("/")}>
+        <button 
+        className={styles.primary}
+        onClick={() => navigate("/")}>
           Menu
         </button>
         <h3>{code}</h3>
