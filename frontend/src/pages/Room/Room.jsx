@@ -24,41 +24,29 @@ function Room() {
   const code = searchParams.get("code");
   const { user, login } = useAuth();
 
-  const [phase, setPhase] = useState("lobby"); // lobby | playing | finished
-
+  const [phase, setPhase] = useState("lobby");
   const [current, setCurrent] = useState(0);
   const [selected, setSelected] = useState(null);
   const [score, setScore] = useState(0);
-  
-    //  MODAL LOGIN
+
+  // MODAL LOGIN
   const [showNameModal, setShowNameModal] = useState(false);
   const [tempName, setTempName] = useState("");
 
-  const question = mockQuestions[current];
+  const question = mockQuestions[current] || mockQuestions[0];
 
-  // LOGIN
+  // LOGIN CHECK
   useEffect(() => {
-  if (!user) {
-    setShowNameModal(true);
-  }
+    if (!user) {
+      setShowNameModal(true);
+    }
   }, []);
 
-  function selectOption(index) {
-    setSelected(index);
-
-    if (index === question.answer) {
-      setScore((s) => s + 1);
-    }
-
-    setTimeout(nextQuestion, 800);
-  }
-
-  /* ---------------- LOADING NAME MODAL ---------------- */
+  /* ---------------- LOGIN MODAL ---------------- */
 
   if (showNameModal) {
     return (
       <div className={styles.modalOverlay}>
-
         <div className={styles.modal}>
           <h2>Bem-vindo ao Testika</h2>
 
@@ -82,102 +70,102 @@ function Room() {
             Entrar
           </button>
         </div>
-
       </div>
     );
+  }
+
+  /* ---------------- SELECT ANSWER ---------------- */
+
+  function selectOption(index) {
+    if (selected !== null) return;
+
+    setSelected(index);
+
+    if (index === question.answer) {
+      setScore((s) => s + 1);
+    }
+
+    setTimeout(() => {
+      nextQuestion();
+    }, 600);
+  }
+
+  function nextQuestion() {
+    setSelected(null);
+
+    if (current < mockQuestions.length - 1) {
+      setCurrent((c) => c + 1);
+    } else {
+      setPhase("finished");
+    }
   }
 
   /* ---------------- LOBBY ---------------- */
 
   if (phase === "lobby") {
-  return (
-    <div className={styles.lobby}>
+    return (
+      <div className={styles.lobby}>
+        <div className={styles.lobbyCard}>
 
-      <div className={styles.lobbyCard}>
+          <h1>Sala de Espera</h1>
 
-        <h1>Sala de Espera</h1>
+          <p>Aguardando início do quiz</p>
 
-        <p className={styles.subtitle}>
-          Aguarde o host iniciar o quiz
-        </p>
+          <div className={styles.infoBox}>
+            <div>
+              <span>Código</span>
+              <strong>{code}</strong>
+            </div>
 
-        <div className={styles.infoBox}>
-          <div>
-            <span>Código da sala</span>
-            <strong>{code}</strong>
+            <div>
+              <span>Jogador</span>
+              <strong>{user?.name}</strong>
+            </div>
           </div>
 
-          <div>
-            <span>Jogador</span>
-            <strong>{user?.name}</strong>
-          </div>
+          <button
+            className={styles.primary}
+            onClick={() => setPhase("playing")}
+          >
+            Iniciar (demo)
+          </button>
+
+          <button
+            className={styles.primary}
+            onClick={() => navigate("/")}
+          >
+            Sair
+          </button>
+
         </div>
-
-        <div className={styles.loading}>
-          <div className={styles.dot}></div>
-          <div className={styles.dot}></div>
-          <div className={styles.dot}></div>
-        </div>
-
-        <button 
-        className={styles.primary}
-        onClick={() => navigate("/")}
-        >
-          Sair da sala
-        </button>
-
-        <button
-          className={styles.primary}
-          onClick={() => setPhase("playing")}
-        >
-          Iniciar (demo)
-        </button>
-
       </div>
-
-    </div>
-  );
-}
+    );
+  }
 
   /* ---------------- FINISHED ---------------- */
 
   if (phase === "finished") {
-  return (
-    <div className={styles.result}>
+    return (
+      <div className={styles.result}>
+        <div className={styles.resultCard}>
 
-      <div className={styles.resultCard}>
+          <h1>Quiz finalizado!</h1>
 
-        <div className={styles.trophy}>🏆</div>
+          <h2>
+            {score} / {mockQuestions.length}
+          </h2>
 
-        <h1>Quiz finalizado!</h1>
+          <button
+            className={styles.primary}
+            onClick={() => navigate("/")}
+          >
+            Voltar ao menu
+          </button>
 
-        <p className={styles.score}>
-          Sua pontuação
-        </p>
-
-        <h2>
-          {score} / {mockQuestions.length}
-        </h2>
-
-        <div className={styles.bar}>
-          <div
-            style={{
-              width: `${(score / mockQuestions.length) * 100}%`
-            }}
-          />
         </div>
-
-        <button 
-        className={styles.primary}
-        onClick={() => navigate("/")}>
-          Voltar ao menu
-        </button>
-
       </div>
-
-    </div>
-  );
-}
+    );
+  }
 
   /* ---------------- GAME ---------------- */
 
@@ -185,13 +173,11 @@ function Room() {
     <div className={styles.room}>
 
       <div className={styles.header}>
-        <button 
-        className={styles.primary}
-        onClick={() => navigate("/")}>
+        <button onClick={() => navigate("/")}>
           Menu
         </button>
 
-        <h3>Código da sala: {code}</h3>
+        <h3>{code}</h3>
 
         <span>{user?.name}</span>
       </div>
