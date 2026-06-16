@@ -1,9 +1,120 @@
+/* VARIÁVEIS DE COR PADRÃO (MODO CLARO) */
 .page {
+  --bg-color: #fafafa;
+  --bg-card: #ffffff;
+  --text-main: #222222;
+  --text-muted: #666666;
+  --border-color: #eeeeee;
+  --input-border: #eee;
+  
+  /* Cores do Card de Quiz */
+  --hero-card-bg: #fff7ed;
+  --hero-card-border: #ffedd5;
+  --hero-card-text: #431407;
+  --opt-intermediaria-bg: #ffffff;
+  --opt-intermediaria-text: #222222;
+  --opt-correta-bg: #0bc03e;
+  --opt-correta-text: #ffffff;
+  --opt-errada-bg: #f53c3c;
+  --opt-errada-text: #ffffff;
+  
+  /* Sombra e Efeitos */
+  --stat-shadow: rgba(0, 0, 0, 0.03);
+  --btn-secondary-hover: #e8e8e7;
+
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  background-color: #fafafa;
+  background-color: var(--bg-color);
+  color: var(--text-main);
   font-family: sans-serif;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* 🚀 AQUI ESTÁ O SEGREDO: O :global(.dark) avisa ao CSS para procurar a classe no topo do site */
+:global(.dark) .page {
+  --bg-color: #121214;
+  --bg-card: #1a1a1e;
+  --text-main: #f5f5f7;
+  --text-muted: #a1a1aa;
+  --border-color: #2e2e33;
+  --input-border: #3f3f46;
+  
+  /* Cores do Card de Quiz adaptadas para o Dark Mode */
+  --hero-card-bg: #2c1a11;
+  --hero-card-border: #431407;
+  --hero-card-text: #ffedd5;
+  --opt-intermediaria-bg: #222226;
+  --opt-intermediaria-text: #f5f5f7;
+  --opt-correta-bg: #06992f;
+  --opt-correta-text: #ffffff;
+  --opt-errada-bg: #cc2a2a;
+  --opt-errada-text: #ffffff;
+  
+  --stat-shadow: rgba(0, 0, 0, 0.4);
+  --btn-secondary-hover: rgba(232, 89, 12, 0.1);
+}
+
+/* O restante do seu arquivo Home.module.css pode continuar exatamente igual! */
+/* CONTAINER DO BOTÃO DE ALTERNÂNCIA */
+.themeToggleContainer {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 10px;
+  padding: 20px 10% 0px;
+}
+
+.themeLabel {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+/* ESTILIZAÇÃO DO SLIDER (SWITCH) */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 26px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  transition: .3s;
+  border-radius: 34px;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 18px;
+  width: 18px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  transition: .3s;
+  border-radius: 50%;
+}
+
+.switch input:checked + .slider {
+  background-color: #e8590c;
+}
+
+.switch input:checked + .slider:before {
+  transform: translateX(24px);
 }
 
 /* HERO */
@@ -11,7 +122,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 100px 10%;
+  padding: 60px 10% 100px;
   gap: 60px;
 }
 
@@ -22,7 +133,6 @@
 .heroText h1 {
   font-size: 52px;
   line-height: 1.1;
-  color: #222;
   margin: 0;
 }
 
@@ -33,7 +143,7 @@
 .heroText p {
   margin-top: 20px;
   margin-bottom: 30px;
-  color: #666;
+  color: var(--text-muted);
   font-size: 18px;
   line-height: 1.5;
   max-width: 500px;
@@ -43,22 +153,25 @@
 .actionsCard {
   display: flex;
   gap: 12px;
-  background: white;
+  background: var(--bg-card);
   padding: 16px;
   border-radius: 16px;
-  box-shadow: 0 15px 40px rgba(0,0,0,0.06);
+  box-shadow: 0 15px 40px var(--stat-shadow);
   max-width: 450px;
   margin-bottom: 24px;
+  transition: background-color 0.3s;
 }
 
 .actionsCard input {
   flex: 1;
   padding: 14px;
   border-radius: 10px;
-  border: 2px solid #eee;
+  border: 2px solid var(--input-border);
+  background-color: var(--bg-card);
+  color: var(--text-main);
   outline: none;
   font-size: 16px;
-  transition: 0.2s;
+  transition: border-color 0.2s, background-color 0.3s, color 0.3s;
 }
 
 .actionsCard input:focus {
@@ -92,7 +205,7 @@
 
 .teacherActions span {
   font-size: 14px;
-  color: #888;
+  color: var(--text-muted);
   font-weight: 500;
 }
 
@@ -112,7 +225,7 @@
 }
 
 .secondary:hover {
-  background: #e8e8e7;
+  background: var(--btn-secondary-hover);
   transform: translateY(-1px);
 }
 
@@ -130,27 +243,30 @@
 /* HERO CARD (O QUIZ ILUSTRATIVO) */
 .heroCard {
   flex: 1;
-  background: #fff7ed;
+  background: var(--hero-card-bg);
   padding: 35px;
   border-radius: 24px;
-  box-shadow: 0 20px 40px rgba(232, 89, 12, 0.1);
-  border: 2px solid #ffedd5;
+  box-shadow: 0 20px 40px rgba(232, 89, 12, 0.05);
+  border: 2px solid var(--hero-card-border);
   max-width: 450px;
+  transition: background-color 0.3s, border-color 0.3s;
 }
 
 .badge {
-  background: #ffedd5;
+  background: var(--hero-card-border);
   color: #e8590c;
   padding: 4px 12px;
   border-radius: 20px;
   font-size: 12px;
   font-weight: bold;
+  transition: background-color 0.3s;
 }
 
 .mock h3 {
   margin: 20px 0;
   font-size: 22px;
-  color: #431407;
+  color: var(--hero-card-text);
+  transition: color 0.3s;
 }
 
 .options {
@@ -165,22 +281,26 @@
   font-weight: 600;
   font-size: 14px;
   box-shadow: 0 4px 10px rgba(0,0,0,0.02);
-  border: 1px solid #fed7aa;
+  border: 1px solid var(--hero-card-border);
   cursor: default;
+  transition: background-color 0.3s, color 0.3s, border-color 0.3s;
 }
 
+/* Integrando suas classes personalizadas de resposta com as variáveis dinâmicas */
 .optIntermediaria {
-  background-color: white;
+  background-color: var(--opt-intermediaria-bg);
+  color: var(--opt-intermediaria-text);
 }
 
 .optErrada {
-  background-color: #f53c3c;
+  background-color: var(--opt-errada-bg);
+  color: var(--opt-errada-text);
 }
 
 .optCorreta {
-  background-color: #0bc03e;
+  background-color: var(--opt-correta-bg);
+  color: var(--opt-correta-text);
 }
-
 
 /* STATS */
 .statsSection {
@@ -191,12 +311,12 @@
 }
 
 .statCard {
-  background: white;
+  background: var(--bg-card);
   padding: 25px;
   border-radius: 15px;
   text-align: center;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.03);
-  transition: 0.2s;
+  box-shadow: 0 10px 25px var(--stat-shadow);
+  transition: transform 0.2s, background-color 0.3s;
 }
 
 .statCard:hover {
@@ -210,7 +330,7 @@
 }
 
 .statCard p {
-  color: #666;
+  color: var(--text-muted);
   margin: 0;
 }
 
@@ -232,10 +352,11 @@
 }
 
 .grid div {
-  background: white;
+  background: var(--bg-card);
   padding: 30px 20px;
   border-radius: 15px;
-  box-shadow: 0 10px 20px rgba(0,0,0,0.03);
+  box-shadow: 0 10px 20px var(--stat-shadow);
+  transition: background-color 0.3s;
 }
 
 .grid h3 {
@@ -248,8 +369,12 @@
   .hero {
     flex-direction: column;
     text-align: center;
-    padding: 60px 5%;
+    padding: 20px 5% 60px;
     gap: 40px;
+  }
+
+  .themeToggleContainer {
+    padding: 20px 5% 0;
   }
 
   .heroText p {

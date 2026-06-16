@@ -20,6 +20,8 @@ function Home() {
   }
 
   return (
+    // Note que voltou a ser apenas styles.page. 
+    // O App.jsx já coloca a classe "dark" por fora se o modo escuro estiver ativo!
     <div className={styles.page}>
 
       {/* HERO */}
@@ -53,7 +55,7 @@ function Home() {
             </button>
           </div>
 
-          {/* Área do Professor (Separada e discreta, abaixo do card principal) */}
+          {/* Área do Professor */}
           <div className={styles.teacherActions}>
             <span>É professor?</span>
             <button className={styles.secondary} onClick={handleCreateRoom}>
@@ -65,7 +67,7 @@ function Home() {
           </div>
         </motion.div>
 
-        {/* LADO DIREITO: O CARD QUE ESTAVA FALTANDO! (Simulação do Quiz) */}
+        {/* LADO DIREITO: O CARD (Simulação do Quiz com suas alterações) */}
         <motion.div 
           className={styles.heroCard}
           initial={{ opacity: 0, x: 40 }}

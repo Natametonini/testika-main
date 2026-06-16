@@ -1,23 +1,38 @@
 .footer {
   padding: 2rem;
-
   display: flex;
-
   justify-content: center;
-
   gap: 2rem;
-
   align-items: center;
-
-  border-top: 1px solid #eee;
-
-  margin-top: 4rem;
+  border-top: 1px solid #eeeeee;
+  
+  
+  /* Cores padrão do Modo Claro */
+  background-color: #ffffff;
+  color: #666666;
+  transition: background-color 0.3s ease, border-top-color 0.3s ease, color 0.3s ease;
 }
 
 .socials {
   display: flex;
-
   gap: 1rem;
-
   font-size: 1.2rem;
+}
+
+/* Efeito de hover nos ícones das redes sociais */
+.socials svg {
+  cursor: pointer;
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.socials svg:hover {
+  color: #e8590c; /* Laranja Testika */
+  transform: translateY(-2px);
+}
+
+/* 🚀 SEGREDO DO MODO ESCURO: Se o topo do site for .dark, muda o rodapé */
+:global(.dark) .footer {
+  background-color: #1a1a1e;
+  border-top: 1px solid #2e2e33;
+  color: #a1a1aa;
 }

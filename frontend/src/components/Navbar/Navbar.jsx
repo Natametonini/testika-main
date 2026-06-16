@@ -4,13 +4,11 @@ import logo from "./Logo.png";
 
 import styles from "./Navbar.module.css";
 
-function Navbar() {
-  // 🚀 IMPORTAMOS O 'handleCreateRoom' QUE CRIAMOS NO CONTEXTO GLOBAL
-  const { user, login, handleCreateRoom } = useAuth();
+// 🚀 RECEBEMOS AS PROPS DO TEMA AQUI
+function Navbar({ isDarkMode, toggleTheme }) {
+  const { handleCreateRoom } = useAuth();
 
-  // 🚀 NOVA LOGICA DO CLIQUE
   function cliqueCriarSala() {
-    // Dispara a função global que vai no seu Java, cria a sala e redireciona
     handleCreateRoom();
   }
 
@@ -21,14 +19,28 @@ function Navbar() {
           <img src={logo} alt="Testika logo" className={styles.logo} />
         </Link>
 
-        <div className={styles.links}>
-          <Link to="/">Home</Link>
-          <Link to="/sobre">Sobre</Link>
-          <Link to="/planos">Planos</Link>
+        {/* 🚀 O SLIDER AGORA FICA AQUI DENTRO, NO MEIO DA NAVBAR */}
+        <div className={styles.themeToggleContainer}>
+          <span className={styles.themeLabel}>
+            {isDarkMode ? "🌙" : "☀️"}
+          </span>
+          <label className={styles.switch}>
+            <input 
+              type="checkbox" 
+              checked={isDarkMode} 
+              onChange={toggleTheme} 
+            />
+            <span className={styles.slider}></span>
+          </label>
         </div>
 
-        {/* 🚀 AGORA O BOTÃO CHAMA A FUNÇÃO CORRETA CONECTADA À API */}
-        <button onClick={cliqueCriarSala}>
+        <div className={styles.links}>
+          <Link to="/" className={styles.navLink}>Home</Link>
+          <Link to="/sobre" className={styles.navLink}>Sobre</Link>
+          <Link to="/planos" className={styles.navLink}>Planos</Link>
+        </div>
+
+        <button onClick={cliqueCriarSala} className={styles.navBtn}>
           Criar Sala
         </button>
       </nav>
